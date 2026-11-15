@@ -90,13 +90,13 @@ footer img{height:34px;width:34px;border-radius:50%;display:block}
 <script>
 (function(){
 var PH=[['Achievement one','Supervisor adds a short description of this quarter’s work here.','Measurable result'],['Achievement two','Supervisor adds a short description of this quarter’s work here.','Measurable result'],['Team contribution','Supervisor adds how this person helped colleagues or the company.','Measurable result']];
-var NOM=[{id:'grace',name:'Grace Kwakye',dept:'Admin/HR',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
-{id:'vanessa',name:'Vanessa Boateng',dept:'News/Programmes',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
-{id:'reginald',name:'Reginald Anim',dept:'Technology',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
-{id:'joseph',name:'Joseph Frimpong',dept:'Content Development',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
-{id:'richard',name:'Richard Obeng Bediako',dept:'Digital Department',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
-{id:'joel',name:'Joel Mawube Zemu',dept:'Sports',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
-{id:'afia',name:'Afia Pokuaa',dept:'Original Cluster',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH}];
+var NOM=[{id:'grace',name:'Grace Kwakye',photo:'Grace Kwakye.jpg',dept:'Admin/HR',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'vanessa',name:'Vanessa Boateng',photo:'Vanessa Boateng.jpg',dept:'News/Programmes',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'reginald',name:'Reginald Anim',photo:'Reginald Anim.jpg',dept:'Technology',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'joseph',name:'Joseph Frimpong',photo:'Joseph Frimpong.jpg',dept:'Content Development',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'richard',name:'Richard Obeng Bediako',photo:'Richard Obeng Bediako.jpg',dept:'Digital Department',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'joel',name:'Joel Mawube Zemu',photo:'Joel Mawube Zemu.jpg',dept:'Sports',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'afia',name:'Afia Pokuaa',photo:'Afia Pokuaa.jpg',dept:'Original Cluster',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH}];
 var BASE={grace:6,vanessa:13,reginald:15,joseph:5,richard:10,joel:8,afia:4},TOTAL=84,OTP='123456';
 var STAFF=['ama@example.com','0241234567','kwame@example.com','0207654321'];
 var DEPTS=[['Admin/HR',6],['Technology',12],['Digital Department',10],['Original Cluster',14],['News/Programmes',16],['Content Development',8],['Sports',7],['Finance',5],['Commercial/Sales',6]];
@@ -133,7 +133,7 @@ function ballot(){
  '<div class="crit"><span>Performance</span><span>Teamwork</span><span>Initiative</span><span>Reliability</span></div>';
  NOM.forEach(function(n){
   var a=n.ach.map(function(x){return '<li><b>'+x[0]+'</b>'+x[1]+' <em>'+x[2]+'</em></li>'}).join('');
-  h+='<div class="nom'+(S.pick===n.id?' sel':'')+'"><div class="nom-top"><div class="av">'+init(n.name)+'</div><div class="who"><b>'+n.name+'</b><small>'+n.dept+'</small></div><button class="pick" data-p="'+n.id+'">'+(S.pick===n.id?'Selected':'Select')+'</button></div><div class="sum">'+n.sum+'</div><details><summary>View achievements</summary><ul class="ach">'+a+'</ul></details></div>'});
+  h+='<div class="nom'+(S.pick===n.id?' sel':'')+'"><div class="nom-top"><img class="av" src="'+n.photo+'" alt="Photo of '+n.name+'"><div class="who"><b>'+n.name+'</b><small>'+n.dept+'</small></div><button class="pick" data-p="'+n.id+'">'+(S.pick===n.id?'Selected':'Select')+'</button></div><div class="sum">'+n.sum+'</div><details><summary>View achievements</summary><ul class="ach">'+a+'</ul></details></div>'});
  return h+'<p class="hint">Nominees can vote too, including for themselves.</p><button class="btn" id="rv" '+(S.pick?'':'disabled')+'>Review my vote</button>'}
 function confirm(){
  var n=nm(S.pick);
