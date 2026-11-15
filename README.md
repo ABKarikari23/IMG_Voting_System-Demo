@@ -60,8 +60,6 @@ Keep all files in the same folder structure or the logos and photos won't load.
 
 The demo is published at [https://abkarikari23.github.io/IMG_Voting_System-Demo/](https://abkarikari23.github.io/IMG_Voting_System-Demo/) from the root of the `master` branch.
 
-Note: GitHub Pages sites are public. Get management's approval before sharing a link that shows staff photos and names.
-
 ## Planned live system (after approval)
 
 | Area | Plan |
