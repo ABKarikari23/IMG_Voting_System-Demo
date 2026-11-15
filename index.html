@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staff Vote | Ignite Media Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e5483f;--teal:#16918b;--ink:#1d1d1f;--mute:#6b6b70;--bg:#f6f5f3;--card:#fff;--line:#e4e2de;--navy:#050d1f;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Manrope,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+header img{height:54px;width:auto;display:block}
+.tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:999px}
+.tabs button{border:0;background:none;font:inherit;font-weight:700;font-size:14px;padding:8px 16px;border-radius:999px;cursor:pointer;color:var(--mute)}
+.tabs button[aria-pressed=true]{background:var(--ink);color:#fff}
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:28px 18px 40px}
+.banner{background:#fff7e0;border:1px solid #f0dd9c;color:#6d5600;font-size:13px;padding:8px 14px;border-radius:8px;margin-bottom:22px}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.15;margin:0 0 8px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:20px;margin:0 0 6px}
+p.lead{color:var(--mute);margin:0 0 22px;max-width:56ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+label{display:block;font-weight:700;font-size:14px;margin-bottom:6px}
+input[type=text]{width:100%;font:inherit;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff}
+input[type=text]:focus,button:focus-visible,summary:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.btn{font:inherit;font-weight:800;border:0;border-radius:10px;padding:13px 22px;cursor:pointer;background:var(--red);color:#fff;margin-top:14px}
+.btn.alt{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.teal{background:var(--teal)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.hint{font-size:13px;color:var(--mute);margin-top:12px}
+.hint code{background:var(--bg);padding:2px 7px;border-radius:6px;font-size:12.5px}
+.err{color:#b3261e;font-size:14px;font-weight:700;margin-top:10px}
+.crit{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.crit span{background:#e6f4f3;color:#0d5f5a;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px}
+.nom{border:2px solid var(--line);border-radius:14px;background:var(--card);margin-bottom:14px;overflow:hidden}
+.nom.sel{border-color:var(--teal);box-shadow:0 0 0 3px #16918b22}
+.nom-top{display:flex;align-items:center;gap:14px;padding:16px}
+.av{width:58px;height:58px;border-radius:50%;background:var(--navy);object-fit:cover;object-position:center top;flex:none;border:2px solid var(--line)}
+.nom-top .who{flex:1;min-width:0}
+.who b{display:block;font-size:17px}
+.who small{color:var(--mute)}
+.pick{font:inherit;font-weight:800;border:2px solid var(--teal);background:#fff;color:var(--teal);border-radius:10px;padding:9px 16px;cursor:pointer}
+.nom.sel .pick{background:var(--teal);color:#fff}
+details{border-top:1px solid var(--line);padding:0 16px}
+summary{cursor:pointer;font-weight:700;font-size:14px;padding:12px 0;color:var(--red)}
+.ach{margin:0 0 14px;padding:0;list-style:none}
+.ach li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:14.5px}
+.ach li:last-child{border:0}
+.ach b{display:block}
+.ach em{font-style:normal;color:var(--teal);font-weight:700}
+.sum{font-size:14.5px;color:var(--mute);padding:0 16px 14px}
+.done{text-align:center;padding:30px 10px}
+.tick{width:68px;height:68px;border-radius:50%;background:var(--teal);color:#fff;font-size:34px;display:grid;place-items:center;margin:0 auto 16px}
+.ref{font-weight:800;letter-spacing:.06em;background:var(--bg);display:inline-block;padding:6px 14px;border-radius:8px;margin:8px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.stat b{font-size:26px;display:block}
+.stat small{color:var(--mute)}
+.bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.bar i{display:block;height:100%;background:var(--teal)}
+.res{display:flex;align-items:center;gap:10px;margin:10px 0;font-size:14.5px}
+.res .n{width:150px;font-weight:700}
+.res .bar{flex:1;margin:0}
+.res .bar i{background:var(--red)}
+.lock{background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:16px;text-align:center;color:var(--mute)}
+footer{background:var(--navy);color:#cfd6e6;padding:16px 20px;text-align:center;font-size:13px}
+footer a{color:#5fe3ff;text-decoration:none;font-weight:700}
+footer .pw{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+footer img{height:34px;width:34px;border-radius:50%;display:block}
+@media(max-width:520px){.nom-top{flex-wrap:wrap}.pick{width:100%}.res .n{width:96px}header img{height:44px}}
+@media(prefers-reduced-motion:no-preference){.card,.nom{animation:in .25s ease-out}@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+<header>
+  <img src="ignite-logo.jpeg" alt="Ignite Media Group">
+  <div class="tabs" role="group" aria-label="Demo view">
+    <button id="tabV" aria-pressed="true">Staff view</button>
+    <button id="tabA" aria-pressed="false">HR admin view</button>
+  </div>
+</header>
+<main id="app"></main>
+<footer>
+  <span class="pw"><img src="abk-logo.jpeg" alt="ABK Technologies logo">
+  <span>Powered by: <b>ABK Technologies</b> &ndash; <a href="https://www.abkarikari23.tech" target="_blank" rel="noopener">www.abkarikari23.tech</a></span></span>
+</footer>
+<script>
+(function(){
+var PH=[['Achievement one','Supervisor adds a short description of this quarter’s work here.','Measurable result'],['Achievement two','Supervisor adds a short description of this quarter’s work here.','Measurable result'],['Team contribution','Supervisor adds how this person helped colleagues or the company.','Measurable result']];
+var NOM=[{id:'grace',name:'Grace Kwakye',dept:'Admin/HR',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'vanessa',name:'Vanessa Boateng',dept:'News/Programmes',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'reginald',name:'Reginald Anim',dept:'Technology',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'joseph',name:'Joseph Frimpong',dept:'Content Development',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'richard',name:'Richard Obeng Bediako',dept:'Digital Department',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'joel',name:'Joel Mawube Zemu',dept:'Sports',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH},
+{id:'afia',name:'Afia Pokuaa',dept:'Original Cluster',sum:'Short summary of this quarter’s work, written by the supervisor and approved by HR.',ach:PH}];
+var BASE={grace:6,vanessa:13,reginald:15,joseph:5,richard:10,joel:8,afia:4},TOTAL=84,OTP='123456';
+var STAFF=['ama@example.com','0241234567','kwame@example.com','0207654321'];
+var DEPTS=[['Admin/HR',6],['Technology',12],['Digital Department',10],['Original Cluster',14],['News/Programmes',16],['Content Development',8],['Sports',7],['Finance',5],['Commercial/Sales',6]];
+var CON={ama:['a**@example.com','024****567'],kwame:['k****@example.com','020****321']};
+var KEY='igniteDemoVote';
+var S={chan:'email',scr:'login',view:'staff',who:'',pick:null,err:'',closed:false};
+function ld(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function sv(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+function norm(v){v=v.trim().toLowerCase();if(v.indexOf('@')>-1)return v;v=v.replace(/[^0-9+]/g,'');if(v.indexOf('+233')===0)v='0'+v.slice(4);return v}
+function init(n){return n.split(' ').map(function(w){return w[0]}).join('')}
+function nm(id){return NOM.filter(function(n){return n.id===id})[0]}
+var app=document.getElementById('app');
+function banner(){return '<div class="banner">Demo only. Photos and names are from the last results graphic. Achievements, vote counts and staff numbers are sample text, and no votes are stored. Use the details shown on each screen to try it.</div>'}
+function login(){
+ return banner()+'<h1>Employee of the Quarter</h1><p class="lead">Q4 2026 voting. Vote from anywhere, once, using the email or phone number registered with HR.</p>'+
+ '<div class="card"><label for="id">Email or phone number</label><input id="id" type="text" autocomplete="off" placeholder="e.g. ama@example.com"><button class="btn" id="go">Continue</button>'+
+ (S.err?'<div class="err" role="alert">'+S.err+'</div>':'')+
+ '<p class="hint">Demo contacts on the staff list: <code>ama@example.com</code> or <code>0241234567</code>. Any other contact is rejected, as it would be in the live system.</p></div>'}
+function chan(){
+ var c=CON[S.who];
+ return banner()+'<h1>How should we send your code?</h1><p class="lead">You are verified. Choose where to receive your one-time code. It goes only to the contact registered with HR.</p>'+
+ '<div class="card"><div class="row"><button class="btn teal" id="ce">Email me the code<br><small style="font-weight:500">'+c[0]+'</small></button><button class="btn" id="cs">Text me the code<br><small style="font-weight:500">'+c[1]+'</small></button></div>'+
+ '<p class="hint">Not your details? Contact HR to correct them before voting.</p></div>'}
+function otp(){
+ var sms=S.chan==='sms',c=CON[S.who],oth=sms?'email':'SMS';
+ var prev=sms?'<div class="card" style="background:#eef7ee;margin-bottom:14px"><small style="color:var(--mute)">Sample text message to '+c[1]+'</small><p style="margin:6px 0 0"><b>IMGVOTE:</b> Your IMG voting code is '+OTP+'. It expires in 10 minutes. Do not share it with anyone.</p></div>'
+ :'<div class="card" style="background:#eef3f9;margin-bottom:14px"><small style="color:var(--mute)">Sample email to '+c[0]+'</small><p style="margin:6px 0 0"><b>Subject: Your IMG voting code</b><br>Your code is '+OTP+'. It expires in 10 minutes. Never share it. HR will never ask for it.<br><small style="color:var(--mute)">Powered by ABK Technologies &ndash; www.abkarikari23.tech</small></p></div>';
+ return banner()+'<h1>Enter your code</h1><p class="lead">We sent a 6-digit code by '+(sms?'SMS':'email')+'. It expires in 10 minutes.</p>'+prev+
+ '<div class="card"><label for="c">6-digit code</label><input id="c" type="text" inputmode="numeric" maxlength="6" autocomplete="off"><div class="row"><button class="btn" id="vf">Verify and continue</button><button class="btn alt" id="sw">Send by '+oth+' instead</button></div>'+
+ (S.err?'<div class="err" role="alert">'+S.err+'</div>':'')+
+ '<p class="hint">Demo code: <code>'+OTP+'</code></p></div>'}
+function ballot(){
+ var h=banner()+'<h1>Choose your Employee of the Quarter</h1><p class="lead">Read each nominee’s achievements before you choose. You can vote once and it can’t be changed.</p>'+
+ '<div class="crit"><span>Performance</span><span>Teamwork</span><span>Initiative</span><span>Reliability</span></div>';
+ NOM.forEach(function(n){
+  var a=n.ach.map(function(x){return '<li><b>'+x[0]+'</b>'+x[1]+' <em>'+x[2]+'</em></li>'}).join('');
+  h+='<div class="nom'+(S.pick===n.id?' sel':'')+'"><div class="nom-top"><div class="av">'+init(n.name)+'</div><div class="who"><b>'+n.name+'</b><small>'+n.dept+'</small></div><button class="pick" data-p="'+n.id+'">'+(S.pick===n.id?'Selected':'Select')+'</button></div><div class="sum">'+n.sum+'</div><details><summary>View achievements</summary><ul class="ach">'+a+'</ul></details></div>'});
+ return h+'<p class="hint">Nominees can vote too, including for themselves.</p><button class="btn" id="rv" '+(S.pick?'':'disabled')+'>Review my vote</button>'}
+function confirm(){
+ var n=nm(S.pick);
+ return banner()+'<h1>Confirm your vote</h1><div class="card"><p style="margin-top:0">You are voting for</p><h2>'+n.name+' <small style="color:var(--mute);font-weight:500">('+n.dept+')</small></h2><p class="hint">Once submitted, your vote can’t be changed or withdrawn.</p><div class="row"><button class="btn teal" id="sub">Submit my vote</button><button class="btn alt" id="bk">Go back</button></div></div>'}
+function done(){
+ var ref=ld().ref||'';
+ return banner()+'<div class="card done"><div class="tick" aria-hidden="true">&#10003;</div><h1>Thank you, your vote is in</h1><p class="lead" style="margin:0 auto 10px">Your vote is anonymous. Results are announced by HR after voting closes.</p><div>Your reference</div><div class="ref">'+ref+'</div><p class="hint">This reference doesn’t show who you voted for.</p><button class="btn alt" id="out">Log out</button></div>'}
+function already(){
+ return banner()+'<div class="card done"><div class="tick" style="background:var(--red)" aria-hidden="true">!</div><h1>You have already voted</h1><p class="lead" style="margin:0 auto 10px">Each staff member gets one vote per quarter. This is what stops over-voting: a second attempt is blocked even from a different phone or browser.</p><button class="btn alt" id="out">Back to login</button></div>'}
+function admin(){
+ var v=ld(),extra=v.who?1:0,add={};
+ var tot=0;NOM.forEach(function(n){add[n.id]=BASE[n.id]+((v.pick===n.id&&v.who)?1:0);tot+=add[n.id]});
+ var pct=Math.round(tot/TOTAL*100);
+ var h=banner()+'<h1>HR admin view</h1><p class="lead">What HR sees during and after voting. HR can see who has voted, never who they voted for.</p>'+
+ '<div class="stats"><div class="stat"><b>'+TOTAL+'</b><small>Registered staff</small></div><div class="stat"><b>'+tot+'</b><small>Votes cast</small></div><div class="stat"><b>'+(TOTAL-tot)+'</b><small>Not yet voted</small></div></div>'+
+ '<div class="card"><b>Turnout: '+pct+'%</b><div class="bar"><i style="width:'+pct+'%"></i></div><small style="color:var(--mute)">Voting closes Friday 12 December, 5:00 pm (sample date)</small>'+
+ '<div style="margin-top:20px"><h2>Results</h2>';
+ if(!S.closed){h+='<div class="lock">Results are locked until voting closes, so nobody is influenced by a live count.</div><button class="btn" id="cl">Close voting and reveal results (demo)</button>'}
+ else{var mx=Math.max.apply(null,NOM.map(function(n){return add[n.id]}));
+  NOM.slice().sort(function(a,b){return add[b.id]-add[a.id]}).forEach(function(n){var w=Math.round(add[n.id]/mx*100);h+='<div class="res"><span class="n">'+n.name+'</span><div class="bar"><i style="width:'+w+'%"></i></div><b>'+add[n.id]+'</b></div>'});
+  h+='<button class="btn alt" id="op">Reopen voting (demo)</button>'}
+ h+='</div></div><div class="card" style="margin-top:14px"><h2>Registered staff by department</h2><p class="hint" style="margin:0 0 14px">'+DEPTS.map(function(d){return d[0]+' ('+d[1]+')'}).join(' &bull; ')+'</p><h2>Also in the live system</h2><p class="hint" style="margin:0">Staff list upload (CSV/Excel) &bull; nominee and achievement approval &bull; export of results to PDF and Excel &bull; audit log &bull; reminders to staff who haven’t voted.</p></div><button class="btn alt" id="rs" style="margin-top:14px">Reset demo</button>';
+ return h}
+function render(){
+ document.getElementById('tabV').setAttribute('aria-pressed',S.view==='staff');
+ document.getElementById('tabA').setAttribute('aria-pressed',S.view==='admin');
+ var m={login:login,chan:chan,otp:otp,ballot:ballot,confirm:confirm,done:done,already:already};
+ app.innerHTML=S.view==='admin'?admin():m[S.scr]();
+ window.scrollTo(0,0);bind()}
+function $(i){return document.getElementById(i)}
+function on(i,f){var e=$(i);if(e)e.onclick=f}
+function bind(){
+ on('go',function(){var v=norm($('id').value);
+  if(STAFF.indexOf(v)<0){S.err='We couldn’t verify you. Check the email or phone number, or contact HR.';render();return}
+  S.who=v.indexOf('kwame')>-1||v==='0207654321'?'kwame':'ama';
+  var d=ld();S.err='';S.scr=(d.who===S.who)?'already':'chan';render()});
+ on('ce',function(){S.chan='email';S.err='';S.scr='otp';render()});
+ on('cs',function(){S.chan='sms';S.err='';S.scr='otp';render()});
+ on('sw',function(){S.chan=S.chan==='sms'?'email':'sms';S.err='';render()});
+ on('vf',function(){if($('c').value.trim()!==OTP){S.err='That code isn’t right. Check it and try again.';render();return}
+  S.err='';S.pick=null;S.scr='ballot';render()});
+ document.querySelectorAll('.pick').forEach(function(b){b.onclick=function(){S.pick=b.getAttribute('data-p');render()}});
+ on('rv',function(){S.scr='confirm';render()});
+ on('bk',function(){S.scr='ballot';render()});
+ on('sub',function(){var r='IMG-'+Math.random().toString(36).slice(2,8).toUpperCase();sv({who:S.who,pick:S.pick,ref:r});S.scr='done';render()});
+ on('out',function(){S.scr='login';S.who='';S.pick=null;render()});
+ on('cl',function(){S.closed=true;render()});
+ on('op',function(){S.closed=false;render()});
+ on('rs',function(){sv({});S.scr='login';S.view='staff';S.closed=false;S.pick=null;render()});
+}
+$('tabV').onclick=function(){S.view='staff';render()};
+$('tabA').onclick=function(){S.view='admin';render()};
+render();
+})();
+</script>
+</body>
+</html>
